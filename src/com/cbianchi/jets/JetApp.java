@@ -3,15 +3,28 @@ package com.cbianchi.jets;
 import java.util.Scanner;
 import static java.lang.System.*;
 
-
 public class JetApp {
 
 	public static Scanner keyboard = new Scanner(System.in);
-	public static Jet jetFleet[] = new Jet[5]; // jetArray to jetFleet to conceptualize better
-	public static Pilot pilotSquadron[] = new Pilot[5];
-	
+
+	Hangar h1 = new Hangar();
+
 	public static void main(String[] args) {
 
+		JetApp app = new JetApp(); //by creating a new JetApp object, I can now run my entire application from within another class
+		app.run();
+
+	}
+
+	public void run() { 
+		initialize();
+//		populateFleet(jetFleet);
+		listMenu();
+
+	}
+
+	public void initialize() {
+		Jet[] jetFleet = new Jet[5];
 		jetFleet[0] = new Jet();
 		jetFleet[1] = new Jet();
 		jetFleet[2] = new Jet();
@@ -42,32 +55,10 @@ public class JetApp {
 		jetFleet[4].setSpeed(500);
 		jetFleet[4].setRange(10_000);
 		jetFleet[4].setPrice(50_000);
-		
-		pilotSquadron[0] = new Pilot();
-		pilotSquadron[1] = new Pilot();
-		pilotSquadron[2] = new Pilot();
-		pilotSquadron[3] = new Pilot();
-		pilotSquadron[4] = new Pilot();
-		
-		pilotSquadron[0].setName("Maverick");
-		pilotSquadron[0].setAge(24);
-		pilotSquadron[0].setExperience(3);
-		
-		pilotSquadron[1].setName("Iceman");
-		pilotSquadron[1].setAge(24);
-		pilotSquadron[1].setExperience(3);
-		
-		pilotSquadron[2].setName("Storm");
-		pilotSquadron[2].setAge(26);
-		pilotSquadron[2].setExperience(5);
-		
-
-		populateFleet(jetFleet);
-		listMenu();
-
+		h1.setJetFleet(jetFleet);
 	}
 
-	public static void listMenu() {
+	public void listMenu() {
 
 		int choice = 0;
 
@@ -80,19 +71,19 @@ public class JetApp {
 
 			switch (choice) {
 			case 1:
-				showFleet(jetFleet);
+				showFleet(h1);
 				break;
 
 			case 2:
-				viewFastestJet(jetFleet);
+				viewFastestJet(h1);
 				break;
 
 			case 3:
-				viewLongestRangeJet(jetFleet);
+				viewLongestRangeJet(h1);
 				break;
 
 			case 4:
-				addJetToFleet(jetFleet);
+				addJetToFleet();
 				break;
 
 			case 5:
@@ -103,36 +94,39 @@ public class JetApp {
 
 	}
 
-	public static void showFleet(Jet[] jetFleet) { 
+	public void showFleet(Hangar h2) {
+		Jet[] jetFleet = h2.getJetFleet();
 		for (int i = 0; i < jetFleet.length; i++) {
-			out.println(jetFleet[i].showPlane() );
-			out.println(pilotSquadron[i].showPilot() + "\n");
+
+			out.println(jetFleet[i].toString());
 		}
 	}
 
-	public static void viewFastestJet(Jet[] jetFleet) {
+	public void viewFastestJet(Hangar h2) {
+		Jet[] jetFleet = h2.getJetFleet();
+		System.out.println(jetFleet.length);
 		double fastestSpeed = 0;
 		int j = 0;
 
+		fastestSpeed = jetFleet[0].getSpeed();
 		for (int i = 0; i < jetFleet.length; i++) {
-
-			fastestSpeed = jetFleet[i].getSpeed();
 
 			if (jetFleet[i].getSpeed() > fastestSpeed) {
 				fastestSpeed = jetFleet[i].getSpeed();
 				j = i;
 			}
 		}
-		out.println(jetFleet[j].showPlane());
+		out.println(jetFleet[j].toString());
 	}
 
-	public static void viewLongestRangeJet(Jet[] jetFleet) {
+	public void viewLongestRangeJet(Hangar h2) {
+		Jet[] jetFleet = h2.getJetFleet();
 		double longestRange = 0;
 		int j = 0;
 
+		longestRange = jetFleet[0].getRange();
 		for (int i = 0; i < jetFleet.length; i++) {
 
-			longestRange = jetFleet[i].getRange();
 
 			if (jetFleet[i].getRange() > longestRange) {
 
@@ -140,10 +134,11 @@ public class JetApp {
 				j = i;
 			}
 		}
-		out.println(jetFleet[j].showPlane());
+		out.println(jetFleet[j].toString());
 	}
 
-	public static void addJetToFleet(Jet[] jetFleet) {
+	public void addJetToFleet() {
+		Jet[] jetFleet = h1.getJetFleet();
 		Jet j1 = new Jet();
 		String model;
 		double speed, range, price = 0;
@@ -161,25 +156,26 @@ public class JetApp {
 		j1.setSpeed(speed);
 		j1.setRange(range);
 		j1.setPrice(price);
+		
+		h1.addJet(j1);
 
-		for (int i = 0; i < jetFleet.length; i++) {
-			if (jetFleet[i].getSpeed() == 0.0) {
-
-				j1 = jetFleet[i];
-				out.println("Your jet has been added to the fleet.");
-				break;
-			}
-		}
+//		for (int i = 0; i < jetFleet.length; i++) {
+//			if (jetFleet[i].getSpeed() == 0.0) {
+//
+//				j1 = jetFleet[i];
+//				out.println("Your jet has been added to the fleet.");
+//				break;
+//			}
+//		}
 	}
 
-	public static void populateFleet(Jet[] jetFleet) {
-
-		for (int i = 0; i < jetFleet.length; i++) {
-			if( jetFleet[i] == null) {
-			jetFleet[i] = new Jet();
-			}
-		}
-
-	}
+//	public void populateFleet(Jet[] jetFleet) {    No longer neccessary
+//
+//		for (int i = 0; i < jetFleet.length; i++) {
+//			if (jetFleet[i] == null) {
+//				jetFleet[i] = new Jet();
+//			}
+//		}
+//	}
 
 }

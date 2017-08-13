@@ -57,7 +57,7 @@ public class Jet {
 		this.range = (double) range;
 	}
 
-	public String showPlane() {
+	public String toString() {
 		StringBuilder builder = new StringBuilder();
 		builder.append("Jet Model:");
 		builder.append(model);

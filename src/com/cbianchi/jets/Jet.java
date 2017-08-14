@@ -3,7 +3,7 @@ package com.cbianchi.jets;
 public class Jet {
 
 	String model;
-	double speed, price, range; // speed taken in mph and converted to Mach
+	double speed, price, range; // speed taken in MPH and converted to Mach
 
 	public Jet(String model, double speed, double range, double price) {
 		this.model = model;
@@ -57,7 +57,7 @@ public class Jet {
 		this.range = (double) range;
 	}
 
-	public String toString() {
+	public String toString() { 
 		StringBuilder builder = new StringBuilder();
 		builder.append("Jet Model:");
 		builder.append(model);

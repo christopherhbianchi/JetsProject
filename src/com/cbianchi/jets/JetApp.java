@@ -8,17 +8,16 @@ public class JetApp {
 	public static Scanner keyboard = new Scanner(System.in);
 
 	Hangar h1 = new Hangar();
-
+	
 	public static void main(String[] args) {
 
-		JetApp app = new JetApp(); //by creating a new JetApp object, I can now run my entire application from within another class
+		JetApp app = new JetApp();
 		app.run();
 
 	}
 
 	public void run() { 
 		initialize();
-//		populateFleet(jetFleet);
 		listMenu();
 
 	}

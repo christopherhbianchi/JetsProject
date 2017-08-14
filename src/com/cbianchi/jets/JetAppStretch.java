@@ -1,4 +1,5 @@
-package com.cbianchi.jets;
+package com.cbianchi.jets; //this second JetAppStretch class is my attempt at building out the project 
+						   //with all the stretch goals to challenge myself. Please defer to my regular JetApp file for grading
 
 import java.util.Scanner;
 import static java.lang.System.*;
@@ -9,7 +10,8 @@ public class JetAppStretch {
 
 	Hangar h1 = new Hangar();
 	Barracks b1 = new Barracks();
-	
+	Pilot[] pilotAssignment;
+
 	public static void main(String[] args) {
 
 		JetAppStretch app = new JetAppStretch();
@@ -17,9 +19,10 @@ public class JetAppStretch {
 
 	}
 
-	public void run() { 
+	public void run() {
 		initializeJets();
 		initializePilots();
+		pilotAssignment = assignPilots(b1, h1);
 		listMenu();
 
 	}
@@ -58,23 +61,22 @@ public class JetAppStretch {
 		jetFleet[4].setPrice(50_000);
 		h1.setJetFleet(jetFleet);
 	}
-	
-	
+
 	public void initializePilots() {
 		Pilot[] pilotSquadron = new Pilot[5];
 		pilotSquadron[0] = new Pilot();
 		pilotSquadron[1] = new Pilot();
 		pilotSquadron[2] = new Pilot();
 		pilotSquadron[3] = new Pilot();
-		
+
 		pilotSquadron[0].setName("Maverick");
 		pilotSquadron[0].setAge(24);
 		pilotSquadron[0].setExperience(1);
-		
+
 		pilotSquadron[1].setName("Iceman");
 		pilotSquadron[1].setAge(24);
 		pilotSquadron[1].setExperience(1);
-		
+
 		pilotSquadron[2].setName("Archer");
 		pilotSquadron[2].setAge(32);
 		pilotSquadron[2].setExperience(7);
@@ -94,7 +96,7 @@ public class JetAppStretch {
 
 			switch (choice) {
 			case 1:
-				showFleet(h1);
+				showFleet(h1, pilotAssignment);
 				break;
 
 			case 2:
@@ -111,7 +113,7 @@ public class JetAppStretch {
 
 			case 5:
 				addPilotToSquadron();
-				
+
 			case 6:
 				out.println("Application terminated.");
 				break;
@@ -120,11 +122,12 @@ public class JetAppStretch {
 
 	}
 
-	public void showFleet(Hangar h2) {
+	public void showFleet(Hangar h2, Pilot[] pilotAssignment) {
 		Jet[] jetFleet = h2.getJetFleet();
 		for (int i = 0; i < jetFleet.length; i++) {
 
 			out.println(jetFleet[i].toString());
+			out.println(pilotAssignment[i].toString());
 		}
 	}
 
@@ -152,7 +155,6 @@ public class JetAppStretch {
 
 		longestRange = jetFleet[0].getRange();
 		for (int i = 0; i < jetFleet.length; i++) {
-
 
 			if (jetFleet[i].getRange() > longestRange) {
 
@@ -182,35 +184,53 @@ public class JetAppStretch {
 		j1.setSpeed(speed);
 		j1.setRange(range);
 		j1.setPrice(price);
-		
+
 		h1.addJet(j1);
 
 	}
-				
+
 	public void addPilotToSquadron() {
 		Pilot[] pilotSquadron = b1.getPilotSquadron();
 		Pilot p1 = new Pilot();
 		String name;
 		int age, experience;
-		
+
 		out.println("Please enter the pilot's name: ");
 		name = keyboard.next();
 		out.println("Enter the pilot's age: ");
 		age = keyboard.nextInt();
 		out.println("Enter the pilot's years of experience: ");
 		experience = keyboard.nextInt();
-		
+
 		p1.setName(name);
 		p1.setAge(age);
 		p1.setExperience(experience);
-		
+
 		b1.addPilot(p1);
+		// assignPilots(b1, h1);
 	}
-		
-		
-		
-		
-		
-		
-		
+
+	public Pilot[] assignPilots(Barracks b1, Hangar h1) { // need the hangar to get the hangar length
+		Pilot[] pilotArray = b1.getPilotSquadron();
+		Jet[] jetArray = h1.getJetFleet();
+		Pilot[] pilotAssignment = new Pilot[jetArray.length];
+
+		for (int i = 0; i < jetArray.length; i++) {
+			int j = (int) (Math.random() * (jetArray.length - 1));
+			pilotAssignment[i] = pilotArray[j];
+		}
+		return pilotAssignment;
+
+	}
+
+	public Pilot[] assignAnotherPilot(Barracks b1, Hangar h1, Pilot[] pilotAssignment) {
+		Jet[] jetArray = h1.getJetFleet();
+		Pilot[] pilotArray = b1.getPilotSquadron();
+
+		int j = (int) (Math.random() * pilotArray.length - 1);
+		Pilot[] pilotAssignment1 = pilotAssignment[pilotAssignment.length + 1];
+
+	}
+	// will be continued later
+
 }

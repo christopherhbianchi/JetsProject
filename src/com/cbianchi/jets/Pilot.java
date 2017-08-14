@@ -41,7 +41,7 @@ public class Pilot {
 	}
 
 	
-	public String showPilot() { //this is a toString
+	public String toString() { //this is a toString
 		StringBuilder builder = new StringBuilder();
 		builder.append("Pilot Name: ");
 		builder.append(name);
@@ -49,7 +49,7 @@ public class Pilot {
 		builder.append(age);
 		builder.append(", Experience: ");
 		builder.append(experience);
-		builder.append("");
+		builder.append("\n");
 		return builder.toString();
 	}
 
